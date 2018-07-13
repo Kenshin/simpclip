@@ -3,8 +3,14 @@ console.log( "=== simpclip contentscripts load ===" )
 import './assets/css/main.styl';
 import 'notify_css';
 
+import md5 from 'md5';
+
+let is_translate = false;
 const root     = 'simpclip',
       $body    = $( 'body' ),
+      translate= '<svg t="1531470351234" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1545" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M736.548571 603.428571l64 80.018286a18.285714 18.285714 0 1 1-28.525714 22.820572L713.142857 632.685714l-58.88 73.581715a18.285714 18.285714 0 1 1-28.525714-22.820572l64-80.018286-18.834286-23.515428a18.285714 18.285714 0 0 1 28.562286-22.857143l13.677714 17.115429 35.108572-43.885715H621.714286a18.285714 18.285714 0 1 1 0-36.571428h73.142857V475.428571a18.285714 18.285714 0 1 1 36.571428 0v18.285715h73.142858a18.285714 18.285714 0 1 1 0 36.571428h-9.508572l-58.514286 73.142857zM271.616 470.857143l-35.291429 84.736a18.285714 18.285714 0 0 1-33.792-14.043429l91.428572-219.428571a18.285714 18.285714 0 0 1 33.755428 0l91.428572 218.843428a18.285714 18.285714 0 0 1-33.718857 14.116572l-35.181715-84.224h-78.628571z m15.250286-36.571429h48.091428l-24.064-57.636571-24.027428 57.636571zM128 603.428571H329.142857a18.285714 18.285714 0 1 1 0 36.571429H109.714286a18.285714 18.285714 0 0 1-18.285715-18.285714V256a18.285714 18.285714 0 0 1 18.285715-18.285714h457.142857a18.285714 18.285714 0 1 1 0 36.571428h-438.857143v329.142857z m768-182.857142H694.857143a18.285714 18.285714 0 1 1 0-36.571429h219.428571a18.285714 18.285714 0 0 1 18.285715 18.285714v365.714286a18.285714 18.285714 0 0 1-18.285715 18.285714H457.142857a18.285714 18.285714 0 1 1 0-36.571428h438.857143v-329.142857z m-179.785143-247.844572a18.285714 18.285714 0 1 1 30.427429 20.260572l-438.857143 658.285714a18.285714 18.285714 0 0 1-30.427429-20.260572l438.857143-658.285714z" p-id="1546" fill="#ffffff"></path></svg>',
+      loading  = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="width: 20px;"><circle stroke="#fff" stroke-width="10" cx="50" cy="50" fill="none" ng-attr-stroke="{{config.color}}" ng-attr-stroke-width="{{config.width}}" ng-attr-r="{{config.radius}}" ng-attr-stroke-dasharray="{{config.dasharray}}" r="30" stroke-dasharray="141.37166941154067 49.12388980384689" transform="rotate(102 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>',
+      error    = '<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1531374978902" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2422" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M994 798.2L605.9 117.5c-9.6-16.8-23.5-30.7-40.3-40.3-25.1-14.3-54.2-18-82-10.3-27.8 7.6-51 25.6-65.3 50.7L30.2 798.2C20.9 814.4 16 832.9 16 851.6c0 59.6 48.4 108 108 108h776.1c18.7 0 37.2-4.9 53.5-14.2 25.1-14.3 43.1-37.5 50.7-65.3s3.9-56.9-10.3-81.9z m-59.1 63c-2.5 9.3-8.5 17-16.9 21.8-5.4 3.1-11.6 4.7-17.8 4.7H124c-19.9 0-36-16.1-36-36 0-6.2 1.6-12.4 4.7-17.8l388.1-680.6c4.8-8.4 12.5-14.4 21.8-16.9 3.2-0.9 6.4-1.3 9.6-1.3 6.2 0 12.3 1.6 17.8 4.7 5.6 3.2 10.2 7.8 13.4 13.4l388.1 680.6c4.7 8.4 5.9 18.1 3.4 27.4z" p-id="2423" fill="#ffffff"></path><path d="M512 722c-22.1 0-40 17.9-40 40v12c0 22.1 17.9 40 40 40s40-17.9 40-40v-12c0-22.1-17.9-40-40-40z m0-412c-22.1 0-40 17.9-40 40v268c0 22.1 17.9 40 40 40s40-17.9 40-40V350c0-22.1-17.9-40-40-40z" p-id="2424" fill="#ffffff"></path></svg>',
       google   = '<svg t="1531450684775" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1048" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M518.848 449.152l414.272 0q6.848 38.272 6.848 73.152 0 124-52 221.44t-148.288 152.288-220.864 54.848q-89.728 0-170.848-34.56t-140-93.44-93.44-140-34.56-170.848 34.56-170.848 93.44-140 140-93.44 170.848-34.56q171.424 0 294.272 114.848l-119.424 114.848q-70.272-68-174.848-68-73.728 0-136.288 37.152t-99.136 100.864-36.576 139.136 36.576 139.136 99.136 100.864 136.288 37.152q49.728 0 91.424-13.728t68.576-34.272 46.848-46.848 29.44-49.728 12.864-44.576l-249.152 0 0-150.848z" p-id="1049" fill="#ffffff"></path></svg>',
       bing     = '<svg t="1531450907872" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3129" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M153.813333 0L358.4 71.936V791.893333l288.128-166.186666-141.226667-66.346667-89.173333-221.866667 453.973333 159.488v231.893334L358.528 1024l-204.672-113.92V0z" fill="#ffffff" p-id="3130"></path></svg>',
       baidu    = '<svg t="1531450985988" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3618" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M226.522 536.053c96.993-20.839 83.792-136.761 80.878-162.089-4.758-39.065-50.691-107.346-113.075-101.952-78.499 7.036-89.957 120.445-89.957 120.445C93.748 444.857 129.764 556.857 226.522 536.053zM329.512 737.61c-2.848 8.175-9.18 29.014-3.686 47.173 10.822 40.707 46.168 42.55 46.168 42.55l50.792 0L422.786 703.169 368.41 703.169C343.952 710.473 332.159 729.468 329.512 737.61zM406.537 341.666c53.572 0 96.859-61.646 96.859-137.9 0-76.12-43.287-137.767-96.859-137.767-53.472 0-96.892 61.646-96.892 137.767C309.645 280.019 353.065 341.666 406.537 341.666zM637.241 350.779c71.598 9.281 117.632-67.141 126.777-125.035 9.349-57.827-36.854-125.036-87.544-136.561-50.791-11.659-114.213 69.688-119.976 122.757C549.597 276.803 565.779 341.566 637.241 350.779zM812.666 691.174c0 0-110.761-85.701-175.425-178.305-87.645-136.593-212.177-81.011-253.822-11.558-41.478 69.452-106.106 113.375-115.286 125-9.314 11.458-133.813 78.666-106.173 201.423 27.64 122.69 124.7 120.345 124.7 120.345s71.53 7.036 154.519-11.524c83.021-18.428 154.484 4.59 154.484 4.59s193.919 64.929 246.988-60.072C895.655 756.037 812.666 691.174 812.666 691.174zM480.881 877.253 354.807 877.253c-54.443-10.855-76.12-48.044-78.867-54.343-2.68-6.433-18.125-36.317-9.951-87.109 23.52-76.12 90.627-81.614 90.627-81.614l67.107 0 0-82.485 57.157 0.871L480.88 877.253zM715.674 876.382l-145.07 0c-56.219-14.508-58.866-54.444-58.866-54.444L511.738 661.49l58.866-0.938 0 144.199c3.586 15.345 22.682 18.159 22.682 18.159l59.771 0L653.057 661.49l62.618 0L715.675 876.382zM921.051 448.006c0-27.708-23.018-111.13-108.385-111.13-85.501 0-96.925 78.732-96.925 134.382 0 53.136 4.489 127.313 110.695 124.935C932.677 593.846 921.051 475.881 921.051 448.006z" p-id="3619" fill="#ffffff"></path></svg>',
@@ -18,8 +24,9 @@ $body.on( "click", clickEventHandler );
  * mouse up event handler
  */
 function clickEventHandler( event ) {
+    if ( is_translate ) return;
     let m_word = String( window.getSelection() );
-    m_word = m_word.replace( /^\s*/, "" ).replace( /\s*$/, "" );
+    m_word     = m_word.replace( /^\s*/, "" ).replace( /\s*$/, "" );
     if ( m_word == "" ) $body.find( 'simpclip' ).length > 0 && remove();
     else {
         $body.find( 'simpclip' ).length > 0 && $( root ).remove();
@@ -34,6 +41,7 @@ function create( event, m_word ) {
     const _dict_x = event.clientX + window.scrollX + 5,
           _dict_y = event.clientY + window.scrollY + 10,
           tmpl    = `<simpclip style="left: ${_dict_x}px; top: ${_dict_y}px;">
+                        <simpclip-a data-href="translate">${translate}</simpclip-a>
                         <simpclip-a data-href="https://www.google.com/search?q=">${google}</simpclip-a>
                         <simpclip-a data-href="https://cn.bing.com/search?q=">${bing}</simpclip-a>
                         <simpclip-a data-href="https://www.baidu.com/s?wd=">${baidu}</simpclip-a>
@@ -66,12 +74,104 @@ function create( event, m_word ) {
             };
             const result = copy( m_word );
             result && new Notify().Render( "已成功复制到剪切板。" );
+        } else if ( href == 'translate' ) {
+            translation( m_word );
         } else {
             const $a = $( `<a style="display:none" href="${ href + encodeURI( m_word ) }" target="_blank"></a>` ).appendTo( "body" );
             $a[0].click();
             $a.remove();
         }
     });
+}
+
+/**
+ * Translate
+ * 
+ * @param {sring} m_word 
+ */
+function translation( m_word ) {
+    let from = 'en', to = 'zh';
+    if ( /[\u4E00-\u9FA5\uf900-\ufa2d]/ig.test( m_word )) {
+        from = 'zh';
+        to   = 'en';
+    }
+    const appid = '20180711000184783',
+            key   = '2nSVEc2GPlR0dJmKfPL3',
+            salt  = new Date().getTime(),
+            query = m_word,
+            str1  = appid + query + salt + key,
+            sign  = md5( str1 );
+    $.ajax({
+        url: 'https://api.fanyi.baidu.com/api/trans/vip/translate',
+        type: 'get',
+        dataType: 'json',
+        data: {
+            q    : m_word,
+            appid: appid,
+            salt : salt,
+            from : from,
+            to   : to,
+            sign : sign
+        },
+        beforeSend : () => {
+            is_translate = true;
+            $( root ).html( `${loading}&nbsp;翻译中...` );
+        },
+        success: result => {
+            is_translate = false;
+            if ( result && result.error_code ) {
+                $( root ).html( `${error}&nbsp;翻译发生错误，请稍后再测试。` );
+                setTimeout( () => removeDictBox(), 2000 );
+            } else crateDictBox( result );
+        },
+        error : ( XMLHttpRequest, textStatus, errorThrown ) => {
+            is_translate = false;
+            $( root ).html( `${error}&nbsp;翻译发生错误，请稍后再测试。` );
+            setTimeout( () => remove(), 2000 );
+        }
+    });
+}
+
+/**
+* Create dict box
+* @param  {[json]} dict_y [翻译结果]
+*/
+function crateDictBox( data ) {
+    const src  = data.trans_result[0].src,
+          dst  = data.trans_result[0].dst,
+          tmpl = `<simpclip-dict-box>
+                    <simpclip-dict-box-title>${ src }</simpclip-dict-box-title>
+                    <simpclip-dict-box-group>
+                        <simpclip-dict-box-subtitle>释义</simpclip-dict-box-subtitle>
+                        <simpclip-dict-box-trans>${ dst }</simpclip-dict-box-trans>
+                    </simpclip-dict-box-group>
+                    <simpclip-dict-box-group>
+                        <simpclip-dict-box-subtitle>更多解释</simpclip-dict-box-subtitle>
+                        <simpclip-dict-box-trans>
+                            <simpclip-a data-href="http://dict.cn/">海词</simpclip-a>
+                            <simpclip-a data-href="https://cn.bing.com/dict/search?q=">必应词典</simpclip-a>
+                            <simpclip-a data-href="https://translate.google.cn/#auto/en/">Google 翻译</simpclip-a>
+                            <simpclip-a data-href="https://fanyi.baidu.com/#${data.from}/${data.to}/">百度翻译</simpclip-a>
+                            <simpclip-a data-href="https://fanyi.sogou.com/#auto/en/">搜狗翻译</simpclip-a>
+                            <simpclip-a data-href="http://www.iciba.com/">金山词霸</simpclip-a>
+                        </simpclip-dict-box-trans>
+                    </simpclip-dict-box-group>
+                  </simpclip-dict-box>`;
+    $( root ).html( tmpl );
+    src.includes( ' ' ) && $( 'simpclip-dict-box-title' ).remove();
+    offsetHeight();
+}
+
+/**
+ * Offset height
+ */
+function offsetHeight() {
+    const maxWidth = $('html').width(),
+            left     = $(root).position().left,
+            width    = $(root).width();
+    if ( left + width > maxWidth ) {
+        $(root).css({ left: `${ left - ( left + width - maxWidth ) - 20 }px` });
+    }
 }
 
 /**

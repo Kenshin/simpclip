@@ -18,7 +18,7 @@ simpclip
     align-items: center;
 
     margin: 5px;
-    padding: 0 5px;
+    padding: 5px;
 
     color: rgba(255, 255, 255, .9);
     background-color: rgba(50, 50, 50, 1);
@@ -33,3 +33,37 @@ simpclip-a
     margin: 5px;
     color: inherit;
     cursor: pointer;
+
+    &:first-child
+        margin-left: 0;
+
+simpclip-dict-box
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    min-width: 300px;
+    max-width: 500px;
+    cursor: auto;
+
+simpclip-dict-box-title
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    padding: 0 50px 20px 20px;
+
+simpclip-dict-box-group
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px 20px 20px;
+
+simpclip-dict-box-subtitle
+    color: #ccc;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+
+simpclip-dict-box-trans
+    font-weight: 500;
+    text-shadow: 0 1px 0 black;
+    color: #fff;
+    font-size: 14px;
