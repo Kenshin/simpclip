@@ -1,0 +1,41 @@
+{
+  "name"            : "Simp Clip",
+  "version"         : "1.0.0",
+  "short_name"      : "simpclip",
+  "description"     : "划词翻译 + 划词搜索 + 划词复制",
+  "homepage_url"    : "https://github.com/Kenshin/simpclip",
+  "author"          : "Kenshin Wang <kenshin@ksria.com>",
+  "icons" : {
+    "16"            : "assets/icons/icon16.png",
+    "48"            : "assets/icons/icon48.png",
+    "128"           : "assets/icons/icon128.png"
+  },
+  "permissions"     : [
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "scripts"       : [ "/bundle/vendors.js" ]
+  },
+  "content_scripts" : [
+    {
+      "matches"     : [ "http://*/*", "https://*/*" ],
+      "js"          : [
+        "/bundle/vendors.js",
+        "/bundle/contentscripts.js"
+       ],
+      "run_at"      : "document_end"
+    }
+  ],
+  "browser_action"     : {
+    "default_icon"  : {
+      "16"          : "assets/icons/icon16.png"
+    }
+  },
+  "web_accessible_resources": [
+    "/assets/images/*"
+  ],
+  "update_url"      : "https://clients2.google.com/service/update2/crx",
+  "content_security_policy" : "script-src 'self' object-src 'self'",
+  "manifest_version": 2
+}
