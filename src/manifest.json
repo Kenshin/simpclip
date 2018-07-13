@@ -1,0 +1,28 @@
+{
+	"name"        : "简单译（SimpTrans） for Chrome",
+	"version"     : "2.1",
+	"description" : "简单译（SimpTrans） for Chrome 插件",
+	"homepage_url": "http://www.k-zone.cn/project/simptrans.html",
+	"icons": {
+		"16" : "icon16.png",
+		"32" : "icon32.png",
+		"48" : "icon48.png",
+		"128": "icon128.png"
+	},
+	"permissions": [
+		"tabs",
+		"http://*/*"
+	],
+	"browser_action": {
+		"default_icon": "icon19.png",
+		"popup"       : "popup.html"
+	},
+	"content_scripts"   : [{
+			"matches"   : [ "http://*/*", "https://*/*" ],
+			"css"       : [ "stylesheets/content-script.css" ],
+			"js"        : [ "javascripts/jquery-1.7.2.min.js", "content_scripts.js" ],
+			"run_at"    : "document_end",
+			"all_frames": true
+		}
+	]
+}

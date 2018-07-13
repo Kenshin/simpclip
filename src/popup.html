@@ -1,0 +1,211 @@
+<!DOCTYPE html> 
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>简单译（SimpTrans） for Chrome</title>
+
+		<script src="javascripts/jquery-1.7.2.min.js"></script>
+
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+
+		<link rel="stylesheet"  href="stylesheets/style.css" />
+
+		<script type="text/javascript">
+
+			//上一个keycode的值
+			var previous_keycode;
+
+			/**
+			 * translation
+			 * @param  {[String]} key [关键字]
+			 */
+			function translation( key ) {
+				console.log("asdfasdf = " + $('#key').val() )
+				$( '#result' ).fadeOut( "fast", function() {
+					$( '#loader' ).fadeIn( "slow" );
+					ajaxYouDaoAPI( key );
+				});
+			}
+
+			/*
+			function aaaa( data ) {
+				console.log( "sssssssssssdasdf = " + data )
+			}
+			*/
+
+			/**
+			 * [对关键字进行翻译]
+			 * @param  {[String]} key [关键字]
+			 */
+			function ajaxYouDaoAPI( key ) {
+				/*
+				$.ajax( {
+					type     : "GET",
+					url      : "http://fanyi.youdao.com/openapi.do?callback=show",
+					data     : "keyfrom=KS-Blog&key=263150855&type=data&doctype=jsonp&version=1.1&q=" + key,
+					dataType : "jsonp"
+				});
+
+				$.getJSON("test.json", function( data ){
+					//var sss = 
+					alert( ". = " + data.web[0].value[0] );
+				});
+				*/
+				
+				/*
+				$.ajax( {
+					type     : "GET",
+					url      : "http://dict.cn/apis/suggestion.php",
+					dataType : "jsonp",
+					data     : "callback=aaaa&q=" + key + "&dict=dict"
+				});
+				*/
+
+				//speach audio
+				var audio = '<embed wmode="transparent" src="http://cidian.youdao.com/chromeplus/voice.swf" loop="false" menu="false" quality="high" bgcolor="#ffffff" width="15" height="15" allowscriptaccess="sameDomain" flashvars="audio=http://dict.youdao.com/speech?audio=' + key + '" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer">';
+				
+				$.ajax({
+					type     : "GET",
+					url      : "http://fanyi.youdao.com/openapi.do",
+					dataType : "json",
+					data     : "keyfrom=KS-Blog&key=263150855&type=data&doctype=json&version=1.1&q=" + key,
+					success: function( data ) {
+						$( '#loader' ).fadeOut( "slow", function() {
+							//展开查询内容表格
+							$( '#result' ).fadeIn( "slow" );
+							//设定翻译结果
+							$( '#trans' ).text( " " + data.translation );
+							//没有查到任何翻译内容
+							if ( data.basic == undefined ) {
+								$( '#phonetic' ).html( "暂无" );
+								$( '#explains' ).html( "暂无" );
+								$( '#web' ).html( "暂无" );
+								$( '#haici' ).html( '<a href="http://dict.cn/' + key + '" target="_blank">『 ' + key + ' 』的更多解释</a>');
+								$( '#hudong' ).html( "暂无" );
+							}
+							else {
+								$( '#phonetic' ).html( data.basic.phonetic == undefined ? "暂无" : data.basic.phonetic + '  ' + audio );
+								$( '#explains' ).html( data.basic.explains == undefined ? "暂无" : data.basic.explains.join( '</br>' ));
+								$( '#web' ).html( data.web                 == undefined ? "暂无" : data.web[0].value.join( '</br>' ));
+								$( '#haici' ).html( '<a href="http://dict.cn/' + key + '" target="_blank">『 ' + key + ' 』的更多解释</a>');
+								$( '#hudong' ).html( 
+													'<a href="http://www.hudong.com/wiki/' + key + '" target="_blank">『 ' + key + ' 』的互动百科解释</a>' + 
+													'<br>' + 
+													'<a href="http://zh.wikipedia.org/wiki/' + key + '" target="_blank">『 ' + key + ' 』的维基百科解释</a>' + 
+													'<div id="baike"></div>'
+													);
+							}
+							//查询输入框赋空值
+							$( '#key' ).val( "" );
+
+							//当满足下面条件则说明，查询内容为词组 或者 有空格
+							if ( $.trim( key ).split(" ").length > 1 ) {
+								$( '#hudong' ).html( "暂无" );
+								return;
+							}
+
+							$.get( "http://www.youdao.com/search?lq=hel&ue=utf8&T1=1330239012129&keyfrom=web.top&q=" + key, function ( data ) {
+								//去掉?hold=redirect
+								data      = data.replace( /\?hold=redirect/g, '' );
+								//获取http://baike.baidu.com/view/的起始位置
+								var tmp   = data.search( /http:\/\/baike.baidu.com\/view\// );
+								//从起始位置开始截取
+								data      = data.substr( tmp );
+								//获取" id="hitURL的位置
+								var tmp2  = data.search( /" id="hitURL/ );
+								//从起始位置开始截取
+								var baike = data.substring( 0, tmp2 );
+
+								if ( baike !== "" ) {
+									$( '#baike' ).html( '<a href="' + baike + '" target="_blank">『 ' + key + ' 』的百度百科解释</a>' );
+								}
+
+							});
+						});
+					}
+				});
+			}
+
+			/**
+			 * key down event handler
+			 * @param  {[String]} event [事件]
+			 * @param  {[String]} key   [查询关键字]
+			 */
+			function onkeydownHandler( event, key ) {
+				if ( event.keyCode == 17 ) previous_keycode = event.keyCode;
+			}
+
+			/**
+			 * key up event handler
+			 * @param  {[String]} event [事件]
+			 * @param  {[String]} key   [查询关键字]
+			 */
+			function onkeyupHandler( event, key ) {
+				if ( event.keyCode == 13 )                           translation( key );
+				if ( previous_keycode == 17 && event.keyCode == 86 ) translation( key );
+			}
+
+		</script>
+
+	</head>
+
+	<body>
+
+		<div id="header">
+			<h1><a href="http://www.k-zone.cn/zblog" title="简单译（SimpTrans） for Chrome" target="_bank">简单译（SimpTrans） for Chrome</a></h1>
+		</div>
+
+		<div class="content">
+
+			<div id="searchbar" class="input-prepend">
+				<span id="search" class="add-on" onclick="translation()"><i class="icon-search"></i></span><input id="key" class="span2 input" name="key" type="text" tabindex="1" placeholder="请输入查询关键字" autofocus="autofocus" 
+					onkeydown="onkeydownHandler( event, this.value )"
+					onkeyup="onkeyupHandler( event, this.value )"
+				>
+			</div>
+
+			<center id="loader">
+				<img src="stylesheets/loading.gif"/>
+			</center>
+
+			<center id="result">
+				<table class="table table-striped table-bordered table-condensed">
+					<tbody>
+						<tr>
+							<td>翻译</td>
+							<td id="trans">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						</tr>
+						<tr>
+							<td>音标</td>
+							<td id="phonetic">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						</tr>
+						<tr>
+							<td>解释</td>
+							<td id="explains">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						</tr>
+						<tr>
+							<td>网络<br>释义</td>
+							<td id="web">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						</tr>
+						<tr>
+							<td>百科</td>
+							<td id="hudong">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						</tr>
+						<tr>
+							<td>海词</td>
+							<td id="haici">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+			</center>
+
+		</div>
+
+		<div id="footer">
+			<a href="http://www.k-zone.cn/project/simptrans.html" target="_blank">项目主页</a> ver 2.1 | code by <a href="http://weibo.com/23784148" target="_blank">Kenshin</a> kenshin@ksria.com
+		</div>
+
+	</body>
+
+</html>
