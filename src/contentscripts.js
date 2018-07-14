@@ -48,7 +48,7 @@ function mouseEnterEventHandler( event ) {
     const type = event.target.tagName.toLowerCase();
     if ( [ 'a', 'img' ].includes( type )) {
         const href = type == 'a' ? event.target.href : event.target.currentSrc;
-        if ( !href.startsWith( 'http' ) ) return;
+        if ( !href.startsWith( 'http' ) || href.endsWith( '#' ) ) return;
         if ( $body.find( 'simpclip' ).length > 0 ) remove();
         selection = { text: event.target.outerText, html: event.target.outerHTML };
         create( event, href, type );
