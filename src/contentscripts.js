@@ -114,6 +114,10 @@ function remove() {
     $( root ).animate({ opacity: 0 }, { duration: 300 ,complete: () => {$( root ).remove();}});
 }
 
+/***********************
+ * Translate
+ ***********************/
+
 /**
  * Translate
  * 
