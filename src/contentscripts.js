@@ -218,8 +218,8 @@ function translation( m_word ) {
 * @param  {[json]} dict_y [翻译结果]
 */
 function crateDictBox( data ) {
-    const src  = data.trans_result[0].src,
-          dst  = data.trans_result[0].dst,
+    const src  = data.trans_result[0].src.replace( /</ig, '&lt;' ).replace( />/ig, '&gt;' ),
+          dst  = data.trans_result[0].dst.replace( /</ig, '&lt;' ).replace( />/ig, '&gt;' ),
           tmpl = `<simpclip-dict-box>
                     <simpclip-dict-box-title>${ src }</simpclip-dict-box-title>
                     <simpclip-dict-box-group>
