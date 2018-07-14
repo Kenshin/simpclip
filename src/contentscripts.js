@@ -29,7 +29,7 @@ $body.on( "click", clickEventHandler );
 $body.on( 'mouseenter', 'a', mouseEnterEventHandler ); 
 
 /**
- * mouse up event handler
+ * Mouse up by selection
  */
 function clickEventHandler( event ) {
     if ( is_translate ) return;
@@ -41,6 +41,9 @@ function clickEventHandler( event ) {
     }
 }
 
+/**
+ * Mouse enter by <a>
+ */
 function mouseEnterEventHandler( event ) {
     if ( event.target.tagName.toLowerCase() == 'a' ) {
         if ( !event.target.href.startsWith( 'http' ) ) return;
@@ -69,7 +72,11 @@ function getSelection() {
 }
 
 /**
- * create search box
+ * Create
+ * 
+ * @param {event}  event
+ * @param {string} section.text
+ * @param {string} include: text, link
  */
 function create( event, m_word, type ) {
     const _dict_x = event.clientX + window.scrollX + 5,
