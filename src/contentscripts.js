@@ -26,7 +26,7 @@ const root        = 'simpclip',
  ***********************/
 
 $body.on( "click", clickEventHandler );
-$body.on( 'mouseenter', 'a', mouseEnterEventHandler ); 
+$body.on( 'mouseenter', 'a, img', mouseEnterEventHandler ); 
 
 /**
  * Mouse up by selection
@@ -42,14 +42,16 @@ function clickEventHandler( event ) {
 }
 
 /**
- * Mouse enter by <a>
+ * Mouse enter by <a> | <img>
  */
 function mouseEnterEventHandler( event ) {
-    if ( event.target.tagName.toLowerCase() == 'a' ) {
-        if ( !event.target.href.startsWith( 'http' ) ) return;
+    const type = event.target.tagName.toLowerCase();
+    if ( [ 'a', 'img' ].includes( type )) {
+        const href = type == 'a' ? event.target.href : event.target.currentSrc;
+        if ( !href.startsWith( 'http' ) ) return;
         if ( $body.find( 'simpclip' ).length > 0 ) remove();
         selection = { text: event.target.outerText, html: event.target.outerHTML };
-        create( event, event.target.href, "link" )
+        create( event, href, type );
     }
 }
 
@@ -92,7 +94,7 @@ function copy( text ) {
  * 
  * @param {event}  event
  * @param {string} section.text
- * @param {string} include: text, link
+ * @param {string} include: text, ( a | img )
  */
 function create( event, m_word, type ) {
     const _dict_x = event.clientX + window.scrollX + 5,
@@ -108,10 +110,10 @@ function create( event, m_word, type ) {
                           <simpclip-a data-href="copy">${copy_icon}</simpclip-a>
                           <simpclip-a data-href="markdown">${md_icon}</simpclip-a>`;
               }
-              else if ( type == 'link' ) {
+              else if ( [ 'a', 'img' ].includes( type ) ) {
                   return `<simpclip-a data-href="">${link_icon}</simpclip-a>
                           <simpclip-a data-href="lnk2md">${md_icon}</simpclip-a>`;
-               }
+              }
           },
           tmpl    = `<simpclip style="left: ${_dict_x}px; top: ${_dict_y}px;">
                        ${actions(type)}
@@ -137,7 +139,8 @@ function create( event, m_word, type ) {
         } else if ( href == 'translate' ) {
             translation( m_word );
         } else if ( href == 'lnk2md' ) {
-            const result = copy( `[${selection.text}](${m_word})` );
+            const prefix = type == 'a' ? '' : '!',
+                  result = copy( `${prefix}[${selection.text}](${m_word})` );
             result && new Notify().Render( "已成功复制到剪切板。" );
         } else {
             const $a = $( `<a style="display:none" href="${ href + encodeURI( m_word ) }" target="_blank"></a>` ).appendTo( "body" );
