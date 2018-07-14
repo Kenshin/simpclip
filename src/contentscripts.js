@@ -18,13 +18,15 @@ const root     = 'simpclip',
       wiki     = '<svg t="1531451085368" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4153" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M638.72 808.533333 529.493333 551.253333C485.973333 636.16 438.186667 725.333333 397.226667 808.533333 396.8 808.96 377.173333 808.533333 377.173333 808.533333 314.453333 661.333333 249.6 516.266667 186.453333 370.346667 171.946667 334.506667 120.746667 277.333333 85.333333 277.333333 85.333333 273.066667 85.333333 263.68 85.333333 258.133333L301.226667 258.133333 301.226667 277.333333C275.626667 277.333333 232.106667 294.4 243.2 322.133333 273.92 387.84 381.44 642.56 410.88 707.413333 430.933333 667.306667 487.68 561.493333 512 516.693333 492.8 479.146667 432.213333 338.346667 414.293333 303.36 400.64 280.32 366.08 277.333333 339.626667 277.333333 339.626667 270.933333 340.053333 266.666667 339.626667 258.56L529.92 258.986667 529.92 276.053333C503.893333 277.333333 479.573333 286.293333 490.666667 311.04 516.266667 363.946667 531.2 401.92 554.666667 450.986667 561.92 436.48 600.32 357.546667 618.666667 316.16 629.76 288.426667 613.12 277.333333 567.04 277.333333 567.466667 272.213333 567.466667 263.253333 567.466667 258.986667 626.773333 258.56 715.946667 258.56 731.733333 258.133333L731.733333 276.053333C701.44 277.333333 670.293333 293.546667 654.08 318.293333L576 482.133333C583.68 503.893333 659.626667 672.426667 667.733333 691.2L832 314.453333C819.2 283.733333 782.506667 277.333333 768 277.333333 768 271.786667 768 264.533333 768 258.133333L938.666667 259.413333 938.666667 260.266667 938.666667 277.333333C901.12 277.333333 877.653333 298.666667 864 330.666667 829.866667 407.04 725.333333 650.24 657.066667 808.533333 657.066667 808.533333 638.72 808.533333 638.72 808.533333Z" p-id="4154" fill="#ffffff"></path></svg>',
       baike    = '<svg t="1531451135912" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4457" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M959.562409 923.105079 862.333994 248.89672c-5.554506-38.291095-25.688055-72.128761-56.69014-95.277994-31.004131-23.149233-69.165266-32.838919-107.457384-27.285436s-72.129784 25.687032-95.279017 56.69014c-11.220552 15.027252-19.268856 31.739888-23.961738 49.330522l0-26.857694c0-79.874165-64.98199-144.856156-144.856156-144.856156-46.315862 0-87.621617 21.852704-114.15697 55.785537-26.535353-33.932834-67.841108-55.785537-114.15697-55.785537-79.874165 0-144.856156 64.98199-144.856156 144.856156l0 722.06225c0 2.119267 0.214894 4.188392 0.623193 6.186909 2.862187 13.988596 15.240099 24.512277 30.075992 24.512277l228.313939 0 228.313939 0 379.860471 0c0.833995 0 1.657756-0.042979 2.474354-0.10847 8.388041-0.38374 16.277732-4.185322 21.801539-10.562567C958.213691 940.854325 960.833355 931.921885 959.562409 923.105079zM652.104945 219.757053c13.33675-17.862833 32.832779-29.462009 54.895261-32.660864s44.048215 2.38328 61.910025 15.72003c17.862833 13.33675 29.462009 32.831756 32.658817 54.869678l92.164073 639.102816-160.566976 0-96.804766-615.279225C633.210619 259.500219 638.798894 237.576907 652.104945 219.757053zM671.022807 896.858298l-92.077092 0L578.945715 311.621297 671.022807 896.858298zM122.317837 205.495234c0-46.01808 37.438681-83.457784 83.457784-83.457784s83.457784 37.438681 83.457784 83.457784l0 691.363064L122.317837 896.858298 122.317837 205.495234zM350.631776 896.858298 350.631776 205.495234c0-46.01808 37.438681-83.457784 83.457784-83.457784s83.457784 37.438681 83.457784 83.457784l0 691.363064L350.631776 896.858298z" p-id="4458" fill="#ffffff"></path></svg>',
       copy     = '<svg t="1531451244469" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5231" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M704 640l256 0 0 355.968C960 1011.392 947.392 1024 931.968 1024L476.032 1024C460.608 1024 448 1011.392 448 995.968L448 412.032C448 396.608 460.608 384 479.168 384L704 384 704 640zM768 389.376 768 576l192 0-182.464-186.624L768 389.376zM448 69.376 448 192l128 0L457.536 69.376 448 69.376zM384 320l192 0L576 256 384 256 384 64 95.168 64C76.608 64 64 76.608 64 92.032l0 644.8c0 15.424 12.608 28.032 28.032 28.032L384 764.864 384 320z" p-id="5232" fill="#ffffff"></path></svg>',
-      md_icon  = '<svg t="1531539167710" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1700" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M895.318 192 128.682 192C93.008 192 64 220.968 64 256.616l0 510.698C64 802.986 93.008 832 128.682 832l766.636 0C930.992 832 960 802.986 960 767.312L960 256.616C960 220.968 930.992 192 895.318 192zM568.046 704l-112.096 0 0-192-84.08 107.756L287.826 512l0 192L175.738 704 175.738 320l112.088 0 84.044 135.96 84.08-135.96 112.096 0L568.046 704 568.046 704zM735.36 704l-139.27-192 84 0 0-192 112.086 0 0 192 84.054 0-140.906 192L735.36 704z" p-id="1701" fill="#ffffff"></path></svg>';
+      md_icon  = '<svg t="1531539167710" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1700" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M895.318 192 128.682 192C93.008 192 64 220.968 64 256.616l0 510.698C64 802.986 93.008 832 128.682 832l766.636 0C930.992 832 960 802.986 960 767.312L960 256.616C960 220.968 930.992 192 895.318 192zM568.046 704l-112.096 0 0-192-84.08 107.756L287.826 512l0 192L175.738 704 175.738 320l112.088 0 84.044 135.96 84.08-135.96 112.096 0L568.046 704 568.046 704zM735.36 704l-139.27-192 84 0 0-192 112.086 0 0 192 84.054 0-140.906 192L735.36 704z" p-id="1701" fill="#ffffff"></path></svg>',
+      link_icon= '<svg t="1531545911286" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1952" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M513 416 512 416l0 0C512.4 416 512.6 416 513 416z" p-id="1953" fill="#ffffff"></path><path d="M737 320 640 320c0 0 52 34 63.2 96L736 416l1 0c35.2 0 63 27.8 63 63l0 64c0 35.2-27.8 65-63 65l-224 0c-35.2 0-65-29.8-65-65L448 480l-96 0 0 63c0 23 5 45 13.8 65 25.2 56.4 81.8 96 147.2 96l224 0c88.4 0 159-72.6 159-161l0-64C896 390.6 825.4 320 737 320z" p-id="1954" fill="#ffffff"></path><path d="M659.2 416c-24.2-56.6-80.2-96-146.2-96l-224 0c-88.4 0-161 70.6-161 159l0 64c0 88.4 72.6 161 161 161L384 704c0 0-51.6-34-64.2-96l-30.8 0c-35.2 0-65-29.8-65-65l0-64c0-35.2 29.8-63 65-63L512 416l1 0c35.2 0 63 27.8 63 63l0 64c0 0.4 0 0.6 0 1l96 0c0-0.4 0-0.6 0-1l0-64C672 456.6 667.4 435.2 659.2 416z" p-id="1955" fill="#ffffff"></path></svg>';
 
 /***********************
  * Global
  ***********************/
 
 $body.on( "click", clickEventHandler );
+$body.on( 'mouseenter', 'a', mouseEnterEventHandler ); 
 
 /**
  * mouse up event handler
@@ -35,7 +37,15 @@ function clickEventHandler( event ) {
     if ( selection.text == "" ) $body.find( 'simpclip' ).length > 0 && remove();
     else {
         $body.find( 'simpclip' ).length > 0 && $( root ).remove();
-        create( event, selection.text );
+        create( event, selection.text, 'text' );
+    }
+}
+
+function mouseEnterEventHandler( event ) {
+    if ( event.target.tagName.toLowerCase() == 'a' ) {
+        if ( !event.target.href.startsWith( 'http' ) ) return;
+        if ( $body.find( 'simpclip' ).length > 0 ) remove();
+        create( event, event.target.href, "link" )
     }
 }
 
@@ -61,19 +71,28 @@ function getSelection() {
 /**
  * create search box
  */
-function create( event, m_word ) {
+function create( event, m_word, type ) {
     const _dict_x = event.clientX + window.scrollX + 5,
           _dict_y = event.clientY + window.scrollY + 10,
+          actions = type => {
+              if ( type == 'text' ) {
+                  return `<simpclip-a data-href="translate">${translate}</simpclip-a>
+                          <simpclip-a data-href="https://www.google.com/search?q=">${google}</simpclip-a>
+                          <simpclip-a data-href="https://cn.bing.com/search?q=">${bing}</simpclip-a>
+                          <simpclip-a data-href="https://www.baidu.com/s?wd=">${baidu}</simpclip-a>
+                          <simpclip-a data-href="https://zh.wikipedia.org/wiki/">${wiki}</simpclip-a>
+                          <simpclip-a data-href="https://baike.baidu.com/item/">${baike}</simpclip-a>
+                          <simpclip-a data-href="copy">${copy}</simpclip-a>
+                          <simpclip-a data-href="markdown">${md_icon}</simpclip-a>`;
+              }
+              else if ( type == 'link' ) {
+                  return `<simpclip-a data-href="">${link_icon}</simpclip-a>
+                          <simpclip-a data-href="lnk2md">${md_icon}</simpclip-a>`;
+               }
+          },
           tmpl    = `<simpclip style="left: ${_dict_x}px; top: ${_dict_y}px;">
-                        <simpclip-a data-href="translate">${translate}</simpclip-a>
-                        <simpclip-a data-href="https://www.google.com/search?q=">${google}</simpclip-a>
-                        <simpclip-a data-href="https://cn.bing.com/search?q=">${bing}</simpclip-a>
-                        <simpclip-a data-href="https://www.baidu.com/s?wd=">${baidu}</simpclip-a>
-                        <simpclip-a data-href="https://zh.wikipedia.org/wiki/">${wiki}</simpclip-a>
-                        <simpclip-a data-href="https://baike.baidu.com/item/">${baike}</simpclip-a>
-                        <simpclip-a data-href="copy">${copy}</simpclip-a>
-                        <simpclip-a data-href="markdown">${md_icon}</simpclip-a>
-                    </simpclip>`;
+                       ${actions(type)}
+                     </simpclip>`;
 
     //add dict icon box to body
     $body.append( tmpl );
@@ -103,6 +122,8 @@ function create( event, m_word ) {
             markdown( clearMD( selection.html.trim()), $( "head title" ).text().trim() + ".md" );
         } else if ( href == 'translate' ) {
             translation( m_word );
+        } else if ( href == 'lnk2md' ) {
+            // To-DO
         } else {
             const $a = $( `<a style="display:none" href="${ href + encodeURI( m_word ) }" target="_blank"></a>` ).appendTo( "body" );
             $a[0].click();
