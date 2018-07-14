@@ -48,6 +48,7 @@ function mouseEnterEventHandler( event ) {
     if ( event.target.tagName.toLowerCase() == 'a' ) {
         if ( !event.target.href.startsWith( 'http' ) ) return;
         if ( $body.find( 'simpclip' ).length > 0 ) remove();
+        selection = { text: event.target.outerText, html: event.target.outerHTML };
         create( event, event.target.href, "link" )
     }
 }
@@ -136,7 +137,8 @@ function create( event, m_word, type ) {
         } else if ( href == 'translate' ) {
             translation( m_word );
         } else if ( href == 'lnk2md' ) {
-            // To-DO
+            const result = copy( `[${selection.text}](${m_word})` );
+            result && new Notify().Render( "已成功复制到剪切板。" );
         } else {
             const $a = $( `<a style="display:none" href="${ href + encodeURI( m_word ) }" target="_blank"></a>` ).appendTo( "body" );
             $a[0].click();
