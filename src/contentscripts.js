@@ -4,6 +4,8 @@ import './assets/css/main.styl';
 import 'notify_css';
 
 import md5 from 'md5';
+import domtoimage from 'dom2image';
+import FileSaver  from 'filesaver';
 import TurndownService from 'markdown';
 
 let is_translate  = false, selection = {};
@@ -20,7 +22,8 @@ const root        = 'simpclip',
       copy_icon   = '<svg t="1531451244469" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5231" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M704 640l256 0 0 355.968C960 1011.392 947.392 1024 931.968 1024L476.032 1024C460.608 1024 448 1011.392 448 995.968L448 412.032C448 396.608 460.608 384 479.168 384L704 384 704 640zM768 389.376 768 576l192 0-182.464-186.624L768 389.376zM448 69.376 448 192l128 0L457.536 69.376 448 69.376zM384 320l192 0L576 256 384 256 384 64 95.168 64C76.608 64 64 76.608 64 92.032l0 644.8c0 15.424 12.608 28.032 28.032 28.032L384 764.864 384 320z" p-id="5232" fill="#ffffff"></path></svg>',
       rich_icon   = '<svg t="1531551122430" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2256" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M443.733197 167.254282c-37.398772-37.397748-95.176686-38.065967-96.401584-38.065967l-0.016373 0L213.295897 129.188314c-45.551452 0-83.770915 37.85619-83.770915 83.407642l0 439.85589c0 45.546336 38.220487 81.335447 83.770915 81.335447l190.408631 0L403.704528 623.942535 267.845281 623.942535c-14.94334 0-28.471448-11.099802-28.471448-26.044166l0-0.859577c0-14.94334 13.528108-28.462239 28.471448-28.462239l135.860271 0 0-54.481845L267.845281 514.094708c-14.94334 0-28.471448-11.216459-28.471448-26.160823l0-0.859577c0-14.944364 13.528108-28.341488 28.471448-28.341488l135.860271 0 0-55.363935L267.845281 403.368884c-14.94334 0-28.471448-10.453073-28.471448-25.39846l0-0.859577c0-14.94334 13.528108-28.227901 28.471448-28.227901L407.638117 348.882945c5.095042-27.243481 20.349467-54.989405 44.254923-75.070766 19.040658-15.996322 42.179658-26.698059 67.019393-31.44006L443.733197 167.254282 443.733197 167.254282zM443.733197 167.254282" p-id="2257" fill="#ffffff"></path><path d="M865.299535 417.503812l-88.61934-88.36249c-37.398772-37.394678-93.454462-35.621289-94.677313-35.621289l-0.021489 0L547.96819 293.520033c-45.551452 0-88.900749 32.975019-88.900749 78.522378l0 439.827237c0 45.546336 43.349297 86.250386 88.900749 86.250386l274.909164 0c45.546336 0 75.577303-40.703027 75.577303-86.250386L898.454656 506.625596C898.454656 455.188086 867.642906 419.860487 865.299535 417.503812L865.299535 417.503812zM734.12396 652.242068c0 14.944364-12.114922 27.063379-27.058262 27.063379L595.974553 679.305447c-14.944364 0-27.058262-12.117992-27.058262-27.063379l0-1.24127c0-14.944364 12.113899-27.058262 27.058262-27.058262l111.091144 0c14.94334 0 27.058262 12.113899 27.058262 27.058262L734.12396 652.242068 734.12396 652.242068zM788.609898 762.090918c0 14.944364-12.117992 27.058262-27.063379 27.058262L595.974553 789.149181c-14.944364 0-27.058262-12.113899-27.058262-27.058262l0-1.24127c0-14.944364 12.113899-27.063379 27.058262-27.063379l165.571966 0c14.944364 0 27.063379 12.117992 27.063379 27.063379L788.609898 762.090918 788.609898 762.090918zM788.609898 542.393217c0 14.948457-12.117992 27.062356-27.063379 27.062356L595.974553 569.455573c-14.944364 0-27.058262-12.113899-27.058262-27.062356l0-1.236154c0-14.948457 12.113899-27.063379 27.058262-27.063379l165.571966 0c14.944364 0 27.063379 12.113899 27.063379 27.063379L788.609898 542.393217 788.609898 542.393217zM788.609898 542.393217" p-id="2258" fill="#ffffff"></path></svg>',
       md_icon     = '<svg t="1531539167710" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1700" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M895.318 192 128.682 192C93.008 192 64 220.968 64 256.616l0 510.698C64 802.986 93.008 832 128.682 832l766.636 0C930.992 832 960 802.986 960 767.312L960 256.616C960 220.968 930.992 192 895.318 192zM568.046 704l-112.096 0 0-192-84.08 107.756L287.826 512l0 192L175.738 704 175.738 320l112.088 0 84.044 135.96 84.08-135.96 112.096 0L568.046 704 568.046 704zM735.36 704l-139.27-192 84 0 0-192 112.086 0 0 192 84.054 0-140.906 192L735.36 704z" p-id="1701" fill="#ffffff"></path></svg>',
-      link_icon   = '<svg t="1531545911286" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1952" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M513 416 512 416l0 0C512.4 416 512.6 416 513 416z" p-id="1953" fill="#ffffff"></path><path d="M737 320 640 320c0 0 52 34 63.2 96L736 416l1 0c35.2 0 63 27.8 63 63l0 64c0 35.2-27.8 65-63 65l-224 0c-35.2 0-65-29.8-65-65L448 480l-96 0 0 63c0 23 5 45 13.8 65 25.2 56.4 81.8 96 147.2 96l224 0c88.4 0 159-72.6 159-161l0-64C896 390.6 825.4 320 737 320z" p-id="1954" fill="#ffffff"></path><path d="M659.2 416c-24.2-56.6-80.2-96-146.2-96l-224 0c-88.4 0-161 70.6-161 159l0 64c0 88.4 72.6 161 161 161L384 704c0 0-51.6-34-64.2-96l-30.8 0c-35.2 0-65-29.8-65-65l0-64c0-35.2 29.8-63 65-63L512 416l1 0c35.2 0 63 27.8 63 63l0 64c0 0.4 0 0.6 0 1l96 0c0-0.4 0-0.6 0-1l0-64C672 456.6 667.4 435.2 659.2 416z" p-id="1955" fill="#ffffff"></path></svg>';
+      link_icon   = '<svg t="1531545911286" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1952" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M513 416 512 416l0 0C512.4 416 512.6 416 513 416z" p-id="1953" fill="#ffffff"></path><path d="M737 320 640 320c0 0 52 34 63.2 96L736 416l1 0c35.2 0 63 27.8 63 63l0 64c0 35.2-27.8 65-63 65l-224 0c-35.2 0-65-29.8-65-65L448 480l-96 0 0 63c0 23 5 45 13.8 65 25.2 56.4 81.8 96 147.2 96l224 0c88.4 0 159-72.6 159-161l0-64C896 390.6 825.4 320 737 320z" p-id="1954" fill="#ffffff"></path><path d="M659.2 416c-24.2-56.6-80.2-96-146.2-96l-224 0c-88.4 0-161 70.6-161 159l0 64c0 88.4 72.6 161 161 161L384 704c0 0-51.6-34-64.2-96l-30.8 0c-35.2 0-65-29.8-65-65l0-64c0-35.2 29.8-63 65-63L512 416l1 0c35.2 0 63 27.8 63 63l0 64c0 0.4 0 0.6 0 1l96 0c0-0.4 0-0.6 0-1l0-64C672 456.6 667.4 435.2 659.2 416z" p-id="1955" fill="#ffffff"></path></svg>',
+      png_icon    = '<svg t="1531552164733" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3778" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M800 752.672 799.808 752.672C799.424 778.92992 778.25792 800 752 800L272 800C245.888 800 224.864 777.58208 224.192 751.52 224.096 751.712 224 752.14208 224 752.14208L223.328 752 224.62592 752C227.60192 718.92992 253.42592 648.128 280.352 588.992 307.424 529.42208 353.64992 529.90208 389.74592 574.01984 415.424 605.36192 433.568 625.13792 452.62592 644.672 465.87008 658.49984 498.176 672.56192 517.76 641.64992 528.224 625.13792 592.39808 527.31008 606.752 500.24192 637.952 441.344 706.496 427.712 734.24 514.73792 764.62208 608.91008 799.232 720.94208 799.76192 752L800 752C800 752.14208 799.904 752.24192 799.904 752.384 799.904 752.43392 800 752.672 800 752.672M347.264 272C389.6576 272 424.064 306.357248 424.064 348.8 424.064 391.1936 389.6576 425.6 347.264 425.6 304.817152 425.6 270.464 391.1936 270.464 348.8 270.464 306.357248 304.8704 272 347.264 272M800 128 224 128C171.008 128 128 171.008 128 224L128 800C128 852.992 171.008 896 224 896L800 896C852.992 896 896 852.992 896 800L896 224C896 171.008 852.992 128 800 128" p-id="3779" fill="#ffffff"></path></svg>';
 
 /***********************
  * Event hander( enter )
@@ -51,7 +54,7 @@ function mouseEnterEventHandler( event ) {
         const href = type == 'a' ? event.target.href : event.target.currentSrc;
         if ( !href.startsWith( 'http' ) || href.endsWith( '#' ) ) return;
         if ( $body.find( 'simpclip' ).length > 0 ) remove();
-        selection = { text: event.target.outerText, html: event.target.outerHTML };
+        selection = { text: event.target.outerText, html: event.target.outerHTML, node: event.target, parent: event.target.parentNode };
         create( event, href, type );
     }
 }
@@ -63,18 +66,21 @@ function mouseEnterEventHandler( event ) {
 /**
  * Get secletion
  * 
- * @return {object} text and html
+ * @return {object} text | html | node | parent
  */
 function getSelection() {
-    const selector  = { text: '', html: '' },
+    const selector  = { text: '', html: '', node: '', parent: '' },
           selection = window.getSelection();
     selector.text   = selection.toString().replace( /^\s*/, "" ).replace( /\s*$/, "" );
     if ( selection.rangeCount > 0 ) {
         const range = selection.getRangeAt(0),
               clone = range.cloneContents(),
               div   = document.createElement('div');
+        div.id = 'simpclip-img';
         div.appendChild( clone );
-        selector.html = div.innerHTML;
+        selector.html   = div.innerHTML;
+        selector.node   = div;
+        selector.parent = range.startContainer.parentNode;
     }
     return selector;
 }
@@ -114,7 +120,8 @@ function create( event, m_word, type ) {
                           <simpclip-a data-href="https://baike.baidu.com/item/">${baike_icon}</simpclip-a>
                           <simpclip-a data-href="copy">${copy_icon}</simpclip-a>
                           <simpclip-a data-href="rich">${rich_icon}</simpclip-a>
-                          <simpclip-a data-href="markdown">${md_icon}</simpclip-a>`;
+                          <simpclip-a data-href="markdown">${md_icon}</simpclip-a>
+                          <simpclip-a data-href="png">${png_icon}</simpclip-a>`;
               }
               else if ( [ 'a', 'img' ].includes( type ) ) {
                   return `<simpclip-a data-href="">${link_icon}</simpclip-a>
@@ -147,6 +154,14 @@ function create( event, m_word, type ) {
             markdown( clearMD( selection.html.trim()), $( "head title" ).text().trim() + ".md" );
         } else if ( href == 'translate' ) {
             translation( m_word );
+        } else if ( href == 'png' ) {
+            const notify = new Notify().Render({ content: '开始转换，成功后自动下载，请稍等。', state: 'loading' });
+            selection.parent.appendChild( selection.node );
+            png( selection.node, $( "head title" ).text().trim() + ".png", result => {
+                notify.complete();
+                $( "#simpclip-img" ).remove();
+                !result && new Notify().Render( 2, "转换失败，请重新选择。" );
+            });
         } else if ( href == 'lnk2md' ) {
             const prefix = type == 'a' ? '' : '!',
                   result = copy( `${prefix}[${selection.text}](${m_word})` );
@@ -301,4 +316,27 @@ function download( data, name ) {
     const $a   = $( `<a style="display:none" href=${data} download="${name}"></a>` ).appendTo( "body" );
     $a[0].click();
     $a.remove();
+}
+
+/***********************
+ * to Image
+ ***********************/
+
+/**
+ * Create PNG
+ * 
+ * @param {html}     html element
+ * @param {string}   name
+ * @param {function} callback
+ */
+function png( element, name, callback ) {
+    try {
+        domtoimage.toBlob( element )
+        .then( blob => {
+            blob && FileSaver.saveAs( blob, name );
+            callback( !!blob );
+        });
+    } catch ( error ) {
+        callback( false );
+    }
 }
