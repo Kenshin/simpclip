@@ -5,7 +5,7 @@ import 'notify_css';
 
 import md5 from 'md5';
 
-let is_translate = false;
+let is_translate = false, selection = {};
 const root     = 'simpclip',
       $body    = $( 'body' ),
       translate= '<svg t="1531470351234" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1545" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14"><defs><style type="text/css"></style></defs><path d="M736.548571 603.428571l64 80.018286a18.285714 18.285714 0 1 1-28.525714 22.820572L713.142857 632.685714l-58.88 73.581715a18.285714 18.285714 0 1 1-28.525714-22.820572l64-80.018286-18.834286-23.515428a18.285714 18.285714 0 0 1 28.562286-22.857143l13.677714 17.115429 35.108572-43.885715H621.714286a18.285714 18.285714 0 1 1 0-36.571428h73.142857V475.428571a18.285714 18.285714 0 1 1 36.571428 0v18.285715h73.142858a18.285714 18.285714 0 1 1 0 36.571428h-9.508572l-58.514286 73.142857zM271.616 470.857143l-35.291429 84.736a18.285714 18.285714 0 0 1-33.792-14.043429l91.428572-219.428571a18.285714 18.285714 0 0 1 33.755428 0l91.428572 218.843428a18.285714 18.285714 0 0 1-33.718857 14.116572l-35.181715-84.224h-78.628571z m15.250286-36.571429h48.091428l-24.064-57.636571-24.027428 57.636571zM128 603.428571H329.142857a18.285714 18.285714 0 1 1 0 36.571429H109.714286a18.285714 18.285714 0 0 1-18.285715-18.285714V256a18.285714 18.285714 0 0 1 18.285715-18.285714h457.142857a18.285714 18.285714 0 1 1 0 36.571428h-438.857143v329.142857z m768-182.857142H694.857143a18.285714 18.285714 0 1 1 0-36.571429h219.428571a18.285714 18.285714 0 0 1 18.285715 18.285714v365.714286a18.285714 18.285714 0 0 1-18.285715 18.285714H457.142857a18.285714 18.285714 0 1 1 0-36.571428h438.857143v-329.142857z m-179.785143-247.844572a18.285714 18.285714 0 1 1 30.427429 20.260572l-438.857143 658.285714a18.285714 18.285714 0 0 1-30.427429-20.260572l438.857143-658.285714z" p-id="1546" fill="#ffffff"></path></svg>',
@@ -25,13 +25,31 @@ $body.on( "click", clickEventHandler );
  */
 function clickEventHandler( event ) {
     if ( is_translate ) return;
-    let m_word = String( window.getSelection() );
-    m_word     = m_word.replace( /^\s*/, "" ).replace( /\s*$/, "" );
-    if ( m_word == "" ) $body.find( 'simpclip' ).length > 0 && remove();
+    selection = getSelection();
+    if ( selection.text == "" ) $body.find( 'simpclip' ).length > 0 && remove();
     else {
         $body.find( 'simpclip' ).length > 0 && $( root ).remove();
-        create( event, m_word );
+        create( event, selection.text );
     }
+}
+
+/**
+ * Get secletion
+ * 
+ * @return {object} text and html
+ */
+function getSelection() {
+    const selector  = { text: '', html: '' },
+          selection = window.getSelection();
+    selector.text   = selection.toString().replace( /^\s*/, "" ).replace( /\s*$/, "" );
+    if ( selection.rangeCount > 0 ) {
+        const range = selection.getRangeAt(0),
+              clone = range.cloneContents(),
+              div   = document.createElement('div');
+        div.appendChild( clone );
+        selector.html = div.innerHTML;
+    }
+    return selector;
 }
 
 /**
