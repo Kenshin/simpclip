@@ -239,7 +239,7 @@ function crateDictBox( data ) {
                     </simpclip-dict-box-group>
                   </simpclip-dict-box>`;
     $( root ).html( tmpl );
-    src.includes( ' ' ) && $( 'simpclip-dict-box-title' ).remove();
+    /( |\n)/ig.test( src ) && $( 'simpclip-dict-box-title' ).remove();
     offsetHeight();
 }
 
