@@ -147,6 +147,7 @@ const webpack = require( 'webpack' ),
         alias : {
           jquery     : __dirname + '/src/vender/jquery-3.3.1.min.js',
           md5        : __dirname + '/src/vender/md5.min.js',
+          markdown   : __dirname + '/node_modules/turndown/lib/turndown.browser.umd.js',
 
           notify_css : __dirname + '/src/vender/notify/notify.css',
           notify     : __dirname + '/src/vender/notify/notify.js',
