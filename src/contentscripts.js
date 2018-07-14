@@ -72,6 +72,21 @@ function getSelection() {
 }
 
 /**
+ * Copy to clipboard
+ * 
+ * @param {string} text 
+ */
+function copy( text ) {
+    const $temp   = $("<textarea>"),
+          brRegex = /<br\s*[\/]?>/gi;
+    $body.append( $temp );
+    $temp.val( text.replace(brRegex, "\r\n") ).select();
+    const result = document.execCommand( "copy" );
+    $temp.remove();
+    return result;
+}
+
+/**
  * Create
  * 
  * @param {event}  event
@@ -114,15 +129,6 @@ function create( event, m_word, type ) {
             href   = target.dataset.href;
         }
         if ( href == "copy" ) {
-            const copy = text => {
-                const $temp   = $("<textarea>"),
-                      brRegex = /<br\s*[\/]?>/gi;
-                $body.append( $temp );
-                $temp.val( text.replace(brRegex, "\r\n") ).select();
-                const result = document.execCommand( "copy" );
-                $temp.remove();
-                return result;
-            };
             const result = copy( m_word );
             result && new Notify().Render( "已成功复制到剪切板。" );
         } else if ( href == 'markdown' ) {
