@@ -76,7 +76,7 @@ function getSelection() {
         const range = selection.getRangeAt(0),
               clone = range.cloneContents(),
               div   = document.createElement('div');
-        div.id = 'simpclip-img';
+        div.className = 'simpclip-img';
         div.appendChild( clone );
         selector.html   = div.innerHTML;
         selector.node   = div;
@@ -159,7 +159,7 @@ function create( event, m_word, type ) {
             selection.parent.appendChild( selection.node );
             png( selection.node, $( "head title" ).text().trim() + ".png", result => {
                 notify.complete();
-                $( "#simpclip-img" ).remove();
+                $( ".simpclip-img" ).remove();
                 !result && new Notify().Render( 2, "转换失败，请重新选择。" );
             });
         } else if ( href == 'lnk2md' ) {
