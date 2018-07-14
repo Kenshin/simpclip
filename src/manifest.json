@@ -2,7 +2,7 @@
   "name"            : "Simp Clip",
   "version"         : "1.0.0",
   "short_name"      : "simpclip",
-  "description"     : "划词翻译 + 划词搜索 + 划词复制",
+  "description"     : "划词翻译 + 划词搜索 + 划词复制 + 划词转换",
   "homepage_url"    : "https://github.com/Kenshin/simpclip",
   "author"          : "Kenshin Wang <kenshin@ksria.com>",
   "icons" : {
