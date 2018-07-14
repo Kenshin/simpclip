@@ -85,6 +85,13 @@ function create( event, m_word ) {
 }
 
 /**
+ * Remove
+ */
+function remove() {
+    $( root ).animate({ opacity: 0 }, { duration: 300 ,complete: () => {$( root ).remove();}});
+}
+
+/**
  * Translate
  * 
  * @param {sring} m_word 
@@ -172,11 +179,4 @@ function offsetHeight() {
     if ( left + width > maxWidth ) {
         $(root).css({ left: `${ left - ( left + width - maxWidth ) - 20 }px` });
     }
-}
-
-/**
- * remove dict box
- */
-function remove() {
-    $( root ).animate({ opacity: 0 }, { duration: 300 ,complete: () => {$( root ).remove();}});
 }
