@@ -122,10 +122,10 @@ function create( event, m_word, type ) {
           tmpl    = `<simpclip style="left: ${_dict_x}px; top: ${_dict_y}px;">
                        ${actions(type)}
                      </simpclip>`;
-
-    //add dict icon box to body
+    // add template
     $body.append( tmpl );
     setTimeout( ()=>$( root ).animate({ opacity: 1 }, { duration: 100 }), 100 );
+    // click event
     $( root ).on( 'click', 'simpclip-a', event => {
         let tag    = event.target.tagName.toLowerCase(),
             href   = event.target.dataset.href,
