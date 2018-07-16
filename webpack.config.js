@@ -47,7 +47,7 @@ const webpack = require( 'webpack' ),
         plugins.push(
           new CopyWebpackPlugin([
             { from   : "src/manifest.json" ,              to : '../' },
-            //{ from   : 'src/options/options.html',        to : '../options/' },
+            { from   : 'src/popup/popup.html',            to : '../popup/' },
             { context: 'src/assets/icons/',  from : "*" , to : '../assets/icons' },
             { context: 'src/assets/images/', from : "*" , to : '../assets/images' },
             //{ context: 'src/_locales/',    from : "*/*" , to : '../_locales/' },
@@ -83,20 +83,19 @@ const webpack = require( 'webpack' ),
     config = {
       entry: {
 
-        vendors : [
-
-          // react
+        ui_vendors: [
           './node_modules/react/dist/react.min.js',
           './node_modules/react-dom/dist/react-dom.min.js',
+        ],
 
-          // vendors
+        vendors : [
           'babel-polyfill',
           'jquery',
-
         ],
 
         contentscripts : './src/contentscripts.js',
-        //background     : './src/background.js',
+        background     : './src/background.js',
+        popup          : './src/popup/popup.js',
       },
 
       output: {
