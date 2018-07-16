@@ -58,10 +58,29 @@ function translation( m_word ) {
         success: result => {
             console.log( result )
             if ( result && result.errorCode != "0" ) $( '.result' ).addClass( 'error' ).html( `${err_icon}翻译发生错误，请稍后再测试。` );
-            //else 
+            else transRender( result );
         },
         error : ( XMLHttpRequest, textStatus, errorThrown ) => {
             $( '.result' ).html( `${err_icon}&nbsp;翻译发生错误，请稍后再测试。` );
         }
     });
+}
+
+/**
+ * Translate Render
+ * 
+ * @param {object} data 
+ */
+function transRender( data ) {
+    const trans = `<div style="padding-right: 10px;width: 100%">
+                    <div class="sub">翻译</div>
+                    <div class="box">${data.translation.join(',')}</div>
+                    <div class="sub">音标</div>
+                    <div class="box">${data.basic.phonetic}</div>
+                    <div class="sub">释义</div>
+                    <div class="box">${data.basic.explains.join('<br>')}</div>
+                    <div class="sub">网络释义</div>
+                    <div class="box">${data.web[0].value.join('<br>')}</div>
+                   </div>`;
+    $( '.result' ).addClass( 'translate' ).html( trans );
 }
