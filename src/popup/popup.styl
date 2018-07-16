@@ -1,9 +1,17 @@
 // use nib
 @import 'nib'
 
+--color = #168BC3;
+
 /**
  * Golbal style
  */
+
+text-field-state
+    border-top: none --color!important;
+    border-left: none --color!important;
+    border-right: none --color!important;
+    border-bottom: 2px solid --color!important;
 
 // https://nzbin.github.io/three-dots/
 .three-dots-pulse
@@ -14,8 +22,8 @@
     width: 10px;
     height: 10px;
 
-    color: #1976d2;
-    background-color: #1976d2;
+    color: --color;
+    background-color: --color;
 
     border-radius: 5px;
     box-shadow: 9984px 0 0 0 #1976d2, 9999px 0 0 0 #1976d2, 10014px 0 0 0 #1976d2;
@@ -56,6 +64,19 @@ body
 .main
     padding: 10px;
 
+.header
+    padding: 10px;
+
+    color: #fff;
+    background: #168bc3;
+
+    height: 70px;
+    line-height: 70px;
+
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+
 .result
     display: flex;
     flex-direction: column;
@@ -78,7 +99,7 @@ body
     font-size: 1rem;
 
 .sub
-    color: #616161;
+    color: --color;
 
     height: 28px;
     line-height: 28px;
@@ -88,10 +109,29 @@ body
     font-weight: 400;
 
 .box
-    padding: 10px;
+    padding-left: 10px;
     width: 100%;
     font-size: 15px;
 
 .translate
     align-items: flex-start;
     justify-content: flex-start;
+
+.footer
+    margin: 10px;
+    padding-top: 5px;
+
+    border-top: 2px solid --color;
+
+    a
+        padding-bottom: 3px;
+
+        color: --color;
+        font-weight: bold;
+        text-decoration: none;
+
+        transition: border-color .5s;
+        border-bottom: 2px solid transparent;
+
+        &:hover
+            border-bottom: 2px solid --color;
