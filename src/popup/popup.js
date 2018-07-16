@@ -90,7 +90,7 @@ function transRender( data ) {
                         <a target="_blank" href="https://cn.bing.com/dict/search?q=${data.query}">必应词典</a>
                         <a target="_blank" href="https://translate.google.cn/#auto/en/${data.query}">Google 翻译</a>
                         <a target="_blank" href="https://fanyi.sogou.com/#auto/en/${data.query}">搜狗翻译</a>
-                        <a target="_blank" href="${data.webdict.url}">有道翻译</a>
+                        <a target="_blank" href="http://www.youdao.com/w/eng/${data.query}">有道翻译</a>
                         <a target="_blank" href="http://www.iciba.com/${data.query}">金山词霸</a>
                     </div>
                    </div>`;
