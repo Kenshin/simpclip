@@ -150,6 +150,8 @@ const webpack = require( 'webpack' ),
           filesaver  : __dirname + '/src/vender/filesaver.min.js',
           markdown   : __dirname + '/node_modules/turndown/lib/turndown.browser.umd.js',
 
+          textfield  : __dirname + '/src/vender/mduikit/textfield.jsx',
+
           notify_css : __dirname + '/src/vender/notify/notify.css',
           notify     : __dirname + '/src/vender/notify/notify.js',
         }
