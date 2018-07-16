@@ -53,7 +53,10 @@ function translation( m_word ) {
             sign  : sign
         },
         beforeSend : () => {
-            $( '.result' ).addClass( 'show' ).html( '<div class="three-dots-pulse"></div>' );
+            $( '.result' )
+                .removeClass( 'translate' )
+                .addClass( 'show' )
+                .html( '<div class="three-dots-pulse"></div>' );
         },
         success: result => {
             console.log( result )
@@ -76,11 +79,11 @@ function transRender( data ) {
                     <div class="sub">翻译</div>
                     <div class="box">${data.translation.join(',')}</div>
                     <div class="sub">音标</div>
-                    <div class="box">${data.basic.phonetic}</div>
+                    <div class="box">${ data.basic && data.basic.phonetic ? data.basic.phonetic : '暂无' }</div>
                     <div class="sub">释义</div>
-                    <div class="box">${data.basic.explains.join('<br>')}</div>
+                    <div class="box">${ data.basic && data.basic.explains ? data.basic.explains.join('<br>') : '暂无' }</div>
                     <div class="sub">网络释义</div>
-                    <div class="box">${data.web[0].value.join('<br>')}</div>
+                    <div class="box">${ data.web && data.web.lenght > 0 ? data.web[0].value.join('<br>') : '暂无' }</div>
                    </div>`;
     $( '.result' ).addClass( 'translate' ).html( trans );
     $( '.footer' ).addClass( 'footer-border' );
