@@ -83,4 +83,5 @@ function transRender( data ) {
                     <div class="box">${data.web[0].value.join('<br>')}</div>
                    </div>`;
     $( '.result' ).addClass( 'translate' ).html( trans );
+    $( '.footer' ).addClass( 'footer-border' );
 }
