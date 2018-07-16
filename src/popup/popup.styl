@@ -61,6 +61,19 @@ body
     padding: 0;
     min-width: 320px;
 
+a
+    padding-bottom: 3px;
+
+    color: --color;
+    font-weight: 400;
+    text-decoration: none;
+
+    transition: border-color .5s;
+    border-bottom: 2px solid transparent;
+
+    &:hover
+        border-bottom: 2px solid --color;
+
 .main
     color: rgba( 51, 51, 51, .8 );
     padding: 10px;
@@ -114,6 +127,9 @@ body
     padding-left: 10px;
     font-size: 15px;
 
+    a
+        color: inherit;
+
 .translate
     align-items: flex-start;
     justify-content: flex-start;
@@ -121,19 +137,6 @@ body
 .footer
     margin: 10px;
     padding-top: 5px;
-
-    a
-        padding-bottom: 3px;
-
-        color: --color;
-        font-weight: 400;
-        text-decoration: none;
-
-        transition: border-color .5s;
-        border-bottom: 2px solid transparent;
-
-        &:hover
-            border-bottom: 2px solid --color;
 
 .footer-border
     border-top: 2px solid --color;

@@ -84,6 +84,15 @@ function transRender( data ) {
                     <div class="box">${ data.basic && data.basic.explains ? data.basic.explains.join('<br>') : '暂无' }</div>
                     <div class="sub">网络释义</div>
                     <div class="box">${ data.web && data.web.lenght > 0 ? data.web[0].value.join('<br>') : '暂无' }</div>
+                    <div class="sub">更多释义</div>
+                    <div class="box">
+                        <a target="_blank" href="http://dict.cn/${data.query}">海词</a>
+                        <a target="_blank" href="https://cn.bing.com/dict/search?q=${data.query}">必应词典</a>
+                        <a target="_blank" href="https://translate.google.cn/#auto/en/${data.query}">Google 翻译</a>
+                        <a target="_blank" href="https://fanyi.sogou.com/#auto/en/${data.query}">搜狗翻译</a>
+                        <a target="_blank" href="${data.webdict.url}">有道翻译</a>
+                        <a target="_blank" href="http://www.iciba.com/${data.query}">金山词霸</a>
+                    </div>
                    </div>`;
     $( '.result' ).addClass( 'translate' ).html( trans );
     $( '.footer' ).addClass( 'footer-border' );
