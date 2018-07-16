@@ -14,7 +14,7 @@ searchRender();
 function searchRender() {
     const textfield = <div>
                         <TextField 
-                            placeholder="请输入需要查询的内容，支持中英文" 
+                            placeholder="请输入需要翻译的内容，支持中英文" 
                             onKeyDown={ e=>onChange(e) }
                         />
                       </div>,
