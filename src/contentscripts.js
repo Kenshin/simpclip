@@ -141,6 +141,9 @@ function create( event, m_word, type ) {
                   return `<simpclip-a data-href="">${link_icon}</simpclip-a>
                           <simpclip-a data-href="lnk2md">${md_icon}</simpclip-a>`;
               }
+              else if ( type == 'link' ) {
+                  return `<simpclip-a data-href="">${link_icon}</simpclip-a>`;
+              }
               else if ( [ 'pre' ].includes( type ) ) {
                   return `<simpclip-a data-href="code">${code_icon}</simpclip-a>`;
               }
@@ -150,6 +153,7 @@ function create( event, m_word, type ) {
                      </simpclip>`;
     // add template
     $body.append( tmpl );
+    type == 'text' && /[a-zA-z]+:\/\/[^\s]*/.test( m_word ) && $( root ).append( actions('link') );
     setTimeout( ()=>$( root ).animate({ opacity: 1 }, { duration: 100 }), 100 );
     // click event
     $( root ).on( 'click', 'simpclip-a', event => {
