@@ -26,5 +26,11 @@
   * 识别 `<a>` 可 `新窗口打开` 以及复制为 `Markdown` 形式；
   * 识别 `<img>` 可 `新窗口打开` 以及复制为 `Markdown` 形式；
 
+
+#### 截图
+![](http://ksria.qiniudn.com/introduce@simpclip.png)
+
+![](http://ksria.qiniudn.com/introduce-2@simpclip.png)
+
 #### 许可：
 [![license-badge]][license-link]
