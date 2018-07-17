@@ -33,6 +33,8 @@
 
 ![](http://ksria.qiniudn.com/introduce-2@simpclip.png)
 
+![](http://ksria.qiniudn.com/introduce-3@simpclip.png)
+
 #### 许可：
 [![license-badge]][license-link]
 
