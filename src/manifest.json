@@ -1,6 +1,7 @@
 {
   "name"            : "Simp Clip",
   "version"         : "1.0.0",
+  "version_name"    : "社区预览版 1.0.0",
   "short_name"      : "simpclip",
   "description"     : "划词翻译 + 划词搜索 + 划词复制 + 划词转换",
   "homepage_url"    : "https://github.com/Kenshin/simpclip",
