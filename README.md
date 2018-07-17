@@ -1,4 +1,4 @@
-<p align="center"><img src="http://ojec5ddd5.bkt.clouddn.com/logo%20bigger.png" /></p>
+<p align="center"><img src="http://ksria.qiniudn.com/logo@simpclip.png" /></p>
 <h1 align="center">Simp Clip</h1>
 <p align="center">划词翻译 + 划词搜索 + 划词复制 + 划词转换</p>
 
