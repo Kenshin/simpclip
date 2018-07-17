@@ -9,7 +9,7 @@
 - 2012-4-29  
   测试版 / Pre 版 2.1 <https://github.com/Kenshin/simpclip/releases/tag/beta-2.1>
 
-- 2018-07-17
+- 2018-07-17  
   内部预览版 1.0.0
 
 #### 功能：
