@@ -10,7 +10,7 @@
   Alpha 版 2.1 <https://github.com/Kenshin/simpclip/releases/tag/2.1-alpha>
 
 - 2018-07-17  
-  内部预览版 1.0.0
+  内部预览版（Beta） 1.0.0
 
 #### 功能：
 
